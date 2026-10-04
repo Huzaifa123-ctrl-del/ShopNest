@@ -1,5 +1,5 @@
 
-import Product from "@/models/Products";
+import {Product} from "@/models/Products";
 import connectDb from "@/middleware/mongoose";
 import { getAuthenticatedUser } from "@/lib/auth";
 
