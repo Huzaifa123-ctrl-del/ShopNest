@@ -15,6 +15,17 @@ export async function GET() {
       { name: "Wireless Headphones", price: 2500, description: "High quality sound", image: "/images/headphone.jpg", category: "Electronics", countInStock: 10 },
       { name: "Smart Watch", price: 5000, description: "Latest smart watch", image: "/images/watch.jpg", category: "Electronics", countInStock: 15 },
       { name: "Running Shoes", price: 3500, description: "Comfortable shoes", image: "/images/shoes.jpg", category: "Fashion", countInStock: 20 },
+      {
+  title: "Coffee Mug",
+  slug: "coffee-mug",
+  desc: "Premium ceramic coffee mug",
+  img: "https://images.unsplash.com/photo-1514228742587-6b1558fcca3d",
+  category: "Mugs",
+  size: "M",
+  color: "White",
+  price: 800,
+  availableQty: 50
+}
     ]);
     return Response.json({ message: "Seeded Successfully!" });
   } catch (e) {
