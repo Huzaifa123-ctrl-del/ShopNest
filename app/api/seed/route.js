@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const MONGODB_URI = "mongodb+srv://siddiquehuzaifa96_db_user:ApyCj1jvEvAwWjni@cluster0.t1j7bnq.mongodb.net/shopnest?appName=Cluster0";
+const MONGODB_URI = "mongodb+srv://siddiquehuzaifa96_db_user:ShopNest123@cluster0.t1j7bnq.mongodb.net/shopnest?appName=Cluster0";
 
 const ProductSchema = new mongoose.Schema({
   name: String, description: String, price: Number, image: String, category: String, countInStock: Number
