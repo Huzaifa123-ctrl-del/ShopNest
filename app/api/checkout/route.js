@@ -1,6 +1,7 @@
 import connectDb from "@/middleware/mongoose";
-import { Product } from "@/models/Products";
-import { Order } from "@/models/Order";
+import Product from "@/models/Products";
+import Order from "@/models/Order";
+
 export async function POST(req) {
   try {
     await connectDb();
@@ -25,6 +26,7 @@ export async function POST(req) {
     }
     return Response.json({ success: true, orderId: order._id });
   } catch (e) {
+    console.log(e);
     return Response.json({ error: e.message }, { status: 500 });
   }
 }
