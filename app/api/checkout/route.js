@@ -13,29 +13,34 @@ export async function POST(req) {
     let verifiedProducts = [];
     let totalAmount = 0;
 
-    // Har item ka price DB se verify karo
     for (let itemCode in cart) {
       let item = cart[itemCode];
-      // itemCode tumhara slug hai jaise "wear-the-code"
-      let dbProduct = await Product.findOne({ slug: itemCode });
+
+      // FIX: _id se search karo, slug se nahi
+      let dbProduct = await Product.findById(itemCode);
+      if (!dbProduct) {
+        dbProduct = await Product.findOne({ _id: itemCode });
+      }
 
       if (!dbProduct) {
-        return Response.json({ error: `Product ${itemCode} not found` }, { status: 400 });
-      }
-      if (dbProduct.availableQty < item.qty) {
-        return Response.json({ error: `${dbProduct.title} out of stock` }, { status: 400 });
+        return Response.json({ error: `Product ${itemCode} not found in DB` }, { status: 400 });
       }
 
-      // REAL PRICE DB SE
+      // FIX: countInStock check
+      if (dbProduct.countInStock < item.qty) {
+        return Response.json({ error: `${dbProduct.name} out of stock` }, { status: 400 });
+      }
+
       totalAmount += dbProduct.price * item.qty;
 
       verifiedProducts.push({
         productId: dbProduct._id.toString(),
+        name: dbProduct.name,
         quantity: item.qty,
+        price: dbProduct.price
       });
     }
 
-    // Order create - amount tumhara nahi, DB wala
     let order = await Order.create({
       userId,
       products: verifiedProducts,
@@ -44,9 +49,9 @@ export async function POST(req) {
       status: "Pending",
     });
 
-    // Stock kam karo
+    // FIX: Stock kam karo countInStock se
     for (let itemCode in cart) {
-      await Product.findOneAndUpdate({ slug: itemCode }, { $inc: { availableQty: -cart[itemCode].qty } });
+      await Product.findByIdAndUpdate(itemCode, { $inc: { countInStock: -cart[itemCode].qty } });
     }
 
     return Response.json({ success: true, orderId: order._id, amount: totalAmount });
