@@ -1,4 +1,4 @@
-import {Product} from "@/models/Products"
+import Product from "@/models/Products"
 import connectDb from "@/middleware/mongoose"
 
 export async function GET(req){

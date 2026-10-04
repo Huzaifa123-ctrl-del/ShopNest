@@ -1,5 +1,5 @@
 import connectDb from "@/middleware/mongoose";
-import { Product } from "@/models/Products";
+import Product from "@/models/Products";
 
 export async function GET() {
   try {
