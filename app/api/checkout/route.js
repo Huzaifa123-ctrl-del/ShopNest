@@ -1,7 +1,6 @@
 import connectDb from "@/middleware/mongoose";
 import { Product } from "@/models/Products";
 import { Order } from "@/models/Order";
-
 export async function POST(req) {
   try {
     await connectDb();
